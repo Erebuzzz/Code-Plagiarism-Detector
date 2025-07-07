@@ -10,9 +10,9 @@ Since Replit is no longer allowing free deployment, I've configured your project
 - ✅ `package.json` - Node.js dependencies and build scripts
 - ✅ `glitch.json` - Glitch-specific configuration
 - ✅ `server.js` - Express server with Flask proxy (updated)
-- ✅ `GLITCH_DEPLOY.md` - Complete deployment guide
-- ✅ `GLITCH_QUICKSTART.md` - 5-minute setup guide
-- ✅ `GLITCH_CHECKLIST.md` - Step-by-step deployment checklist
+- ✅ `DEPLOYMENT.md` - Complete deployment guide
+- ✅ `QUICKSTART.md` - 5-minute setup guide
+- ✅ `CHECKLIST.md` - Step-by-step deployment checklist
 - ✅ `start-glitch.sh` - Automated setup script
 
 #### Updated Files:
@@ -96,9 +96,9 @@ https://your-app.glitch.me/
 
 ### 📚 Documentation Available
 
-1. **GLITCH_QUICKSTART.md** - 5-minute setup
-2. **GLITCH_DEPLOY.md** - Detailed deployment guide  
-3. **GLITCH_CHECKLIST.md** - Step-by-step checklist
+1. **QUICKSTART.md** - 5-minute setup
+2. **DEPLOYMENT.md** - Detailed deployment guide  
+3. **CHECKLIST.md** - Step-by-step checklist
 
 ### 🎉 You're All Set!
 

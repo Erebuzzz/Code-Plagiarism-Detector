@@ -54,6 +54,20 @@ yarn-error.log*
 ehthumbs.db
 Thumbs.db
 
-# Replit
+# Deployment specific
 .replit
 replit.nix
+public/
+
+# Development artifacts
+test_*.py
+debug_*.py
+*_test.py
+*_fixed.py
+demo.py
+minimal_*.py
+
+# Build artifacts
+*.pyc
+.coverage
+.pytest_cache/
