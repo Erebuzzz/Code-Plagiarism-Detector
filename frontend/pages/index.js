@@ -24,7 +24,7 @@ export default function Home({ darkMode, toggleDarkMode }) {
     setResults(null)
 
     try {
-      const response = await fetch('/check', {
+      const response = await fetch('/api/check', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

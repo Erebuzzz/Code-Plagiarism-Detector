@@ -2,25 +2,37 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  
+  // For Replit deployment - API calls go to same origin
   async rewrites() {
     return [
       {
-        source: '/check',
-        destination: 'http://localhost:8000/check',
+        source: '/api/check',
+        destination: '/check',
       },
       {
-        source: '/analyze',
-        destination: 'http://localhost:8000/analyze',
+        source: '/api/analyze', 
+        destination: '/analyze',
       },
       {
-        source: '/detailed-check',
-        destination: 'http://localhost:8000/detailed-check',
+        source: '/api/detailed-check',
+        destination: '/detailed-check',
       },
     ]
   },
+  
+  // Static export for Replit deployment
+  output: 'export',
+  trailingSlash: true,
+  
   images: {
     unoptimized: true
-  }
+  },
+  
+  // Disable server-side features for static export
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }
 
 module.exports = nextConfig

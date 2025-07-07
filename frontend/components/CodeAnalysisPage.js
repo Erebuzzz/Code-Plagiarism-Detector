@@ -19,7 +19,7 @@ const CodeAnalysisPage = ({ darkMode }) => {
     setAnalysis(null)
 
     try {
-      const response = await fetch('/analyze', {
+      const response = await fetch('/api/analyze', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

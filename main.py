@@ -434,12 +434,27 @@ code_analyzer = CodeAnalyzer()
 @app.route('/')
 def index():
     """Serve the React frontend"""
-    return send_from_directory('out', 'index.html')
+    try:
+        return send_from_directory('static', 'index.html')
+    except:
+        # Fallback for development or if static files don't exist
+        return jsonify({
+            'message': 'AI Code Plagiarism Detector API',
+            'status': 'healthy',
+            'endpoints': ['/check', '/analyze', '/detailed-check', '/health']
+        })
 
 @app.route('/<path:path>')
 def static_files(path):
     """Serve static files"""
-    return send_from_directory('out', path)
+    try:
+        return send_from_directory('static', path)
+    except:
+        # If file not found, serve the main app (for SPA routing)
+        try:
+            return send_from_directory('static', 'index.html')
+        except:
+            return jsonify({'error': 'File not found'}), 404
 
 @app.route('/check', methods=['POST'])
 def check_similarity():
@@ -921,7 +936,22 @@ def convert_numpy_types(obj):
     return obj
 
 if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    host = os.environ.get('HOST', '0.0.0.0')
+    debug_mode = os.environ.get('FLASK_ENV') != 'production'
+    
+    # Check if running on Replit
+    is_replit = os.environ.get('REPLIT_ENV') == 'true' or 'REPL_SLUG' in os.environ
+    
     print("🚀 Starting AI Code Plagiarism Detector Backend...")
-    print("📡 Server running on http://localhost:8000")
+    if is_replit:
+        repl_url = f"https://{os.environ.get('REPL_SLUG', 'your-app')}.{os.environ.get('REPL_OWNER', 'username')}.repl.co"
+        print(f"🌐 Replit URL: {repl_url}")
+        print(f"📡 Server running on {host}:{port}")
+    else:
+        print(f"📡 Server running on http://{host}:{port}")
+    
     print("🔗 CORS enabled for frontend integration")
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    print("✅ Ready to detect code plagiarism!")
+    
+    app.run(host=host, port=port, debug=debug_mode)

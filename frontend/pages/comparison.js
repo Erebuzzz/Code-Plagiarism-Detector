@@ -22,8 +22,7 @@ export default function Comparison({ darkMode, toggleDarkMode }) {
     setError(null)
     setDetailedResults(null)
 
-    try {
-      const response = await fetch('/detailed-check', {
+    try {        const response = await fetch('/api/detailed-check', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
