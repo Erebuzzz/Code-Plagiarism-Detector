@@ -941,19 +941,15 @@ if __name__ == '__main__':
     debug_mode = os.environ.get('FLASK_ENV') != 'production'
     
     # Check deployment environment
-    is_replit = os.environ.get('REPLIT_ENV') == 'true' or 'REPL_SLUG' in os.environ
-    is_glitch = os.environ.get('GLITCH_ENV') == 'true' or 'PROJECT_DOMAIN' in os.environ
+    is_zeabur = os.environ.get('ZEABUR') == 'true' or 'ZEABUR_URL' in os.environ
+    is_vercel = os.environ.get('VERCEL') == '1' or 'VERCEL_URL' in os.environ
     
     print("🚀 Starting AI Code Plagiarism Detector Backend...")
-    if is_replit:
-        repl_url = f"https://{os.environ.get('REPL_SLUG', 'your-app')}.{os.environ.get('REPL_OWNER', 'username')}.repl.co"
-        print(f"🌐 Replit URL: {repl_url}")
-        print(f"📡 Server running on {host}:{port}")
-    elif is_glitch:
-        glitch_url = f"https://{os.environ.get('PROJECT_DOMAIN', 'your-app')}.glitch.me"
-        print(f"🌐 Glitch URL: {glitch_url}")
+    if is_zeabur:
+        zeabur_url = os.environ.get('ZEABUR_URL', 'your-app.zeabur.app')
+        print(f"🌐 Zeabur Backend URL: {zeabur_url}")
         print(f"📡 Flask backend running on {host}:{port}")
-        print("🔄 Served via Express proxy at /api/*")
+        print("� Frontend deployed separately on Vercel")
     else:
         print(f"📡 Server running on http://{host}:{port}")
     

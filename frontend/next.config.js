@@ -3,36 +3,35 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   
-  // For Replit deployment - API calls go to same origin
+  // Environment variables for API backend
+  env: {
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000',
+  },
+  
+  // For Vercel deployment with Zeabur backend
   async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    
     return [
       {
-        source: '/api/check',
-        destination: '/check',
-      },
-      {
-        source: '/api/analyze', 
-        destination: '/analyze',
-      },
-      {
-        source: '/api/detailed-check',
-        destination: '/detailed-check',
+        source: '/api/:path*',
+        destination: `${apiUrl}/:path*`,
       },
     ]
   },
   
-  // Static export for Replit deployment
-  output: 'export',
-  trailingSlash: true,
-  
+  // Vercel deployment configuration
   images: {
     unoptimized: true
   },
   
-  // Disable server-side features for static export
   eslint: {
     ignoreDuringBuilds: true,
   },
+  
+  // Optimize for production
+  swcMinify: true,
+  poweredByHeader: false,
 }
 
 module.exports = nextConfig

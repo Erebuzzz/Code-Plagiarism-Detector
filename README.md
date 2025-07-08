@@ -53,7 +53,26 @@ A comprehensive full-stack web application for detecting code plagiarism using m
 - **Monaco Editor**: VS Code-style code editor
 - **Chart.js**: Interactive data visualization
 
-## 🚀 Quick Start
+## 🚀 Deployment (Recommended)
+
+**Split Architecture for Optimal Performance:**
+
+### Backend (Zeabur) + Frontend (Vercel)
+1. **Backend**: Deploy on [Zeabur](https://zeabur.com) - Python Flask API
+2. **Frontend**: Deploy on [Vercel](https://vercel.com) - Next.js React App
+
+📚 **Detailed Guide**: See [DEPLOYMENT.md](./DEPLOYMENT.md)  
+⚡ **Quick Setup**: See [QUICKSTART.md](./QUICKSTART.md)
+
+### Why Split Deployment?
+- ✅ **Better Performance**: Each service optimized for its purpose
+- ✅ **Independent Scaling**: Scale backend and frontend separately  
+- ✅ **Cost Effective**: Generous free tiers on both platforms
+- ✅ **Professional**: Enterprise-grade infrastructure
+
+---
+
+## 🛠️ Local Development
 
 ### Prerequisites
 - Python 3.8+

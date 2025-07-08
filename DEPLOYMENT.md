@@ -1,130 +1,191 @@
-# 🚀 Glitch Deployment Guide - AI Code Plagiarism Detector
+# 🚀 Zeabur + Vercel Deployment Guide
 
-## Deploy to Glitch (Backend + Frontend Combined) - FREE!
+## Architecture Overview
 
-Glitch offers free hosting that's perfect for your AI Code Plagiarism Detector. No credit card required!
+This project uses a **split deployment strategy** for optimal performance:
 
-### 📋 Prerequisites
-- Glitch account (free at [glitch.com](https://glitch.com))
-- Your API keys (Cohere, Together.ai, Replicate)
-- GitHub repository (optional but recommended)
+- **Backend (Python Flask)**: Deployed on **Zeabur** 
+- **Frontend (Next.js React)**: Deployed on **Vercel**
 
-### 🎯 Why Glitch?
-- ✅ **Completely FREE** - No credit card needed
-- ✅ Automatic HTTPS
-- ✅ Built-in code editor
-- ✅ Easy environment management
-- ✅ Auto-deployment on file changes
-- ✅ Great community and support
-- ✅ Perfect for demos and portfolios
+## Why This Architecture?
 
-### 🔧 Deployment Steps
+✅ **Zeabur** excels at Python backend deployment  
+✅ **Vercel** is perfect for Next.js frontends  
+✅ Better performance than monolithic deployments  
+✅ Easier scaling and maintenance  
+✅ Both offer generous free tiers  
 
-#### 1. Create New Glitch Project
-1. Go to [glitch.com](https://glitch.com)
-2. Click "New Project"
-3. Choose "Import from GitHub" (recommended) or "hello-express"
-4. Name it: `ai-code-plagiarism-detector`
+---
 
-#### 2. Import Your Code
-**Option A: From GitHub (Recommended)**
-1. Click "Tools" → "Import and Export" → "Import from GitHub"
-2. Enter your repository URL: `https://github.com/yourusername/Code-Plagiarism-Detector`
-3. Glitch will import everything automatically
+## 🏗️ Backend Deployment (Zeabur)
 
-**Option B: Manual Upload**
-1. Delete default files
-2. Upload/copy all your project files
-3. Maintain the same directory structure
+### 1. Prepare Backend Repository
+Your backend files are ready:
+- `main.py` - Flask application
+- `requirements.txt` - Python dependencies  
+- `Dockerfile` - Container configuration
+- `zbpack.json` - Zeabur configuration
+- `.env.example` - Environment variables template
 
-#### 3. Configure Environment Variables
-1. In Glitch, click ".env" file in the sidebar
-2. Add these environment variables:
+### 2. Deploy to Zeabur
+
+1. **Create Zeabur Account**
+   - Go to [zeabur.com](https://zeabur.com)
+   - Sign up with GitHub
+
+2. **Create New Service**
+   - Click "Create Service"
+   - Select "Git Repository"
+   - Connect your GitHub repository
+   - Select this project
+
+3. **Configure Environment Variables**
+   Add these in Zeabur dashboard:
    ```
-   COHERE_API_KEY=your_cohere_key_here
-   TOGETHER_API_KEY=your_together_ai_key_here
-   REPLICATE_API_TOKEN=your_replicate_token_here
-   GLITCH_ENV=true
-   NODE_ENV=production
+   COHERE_API_KEY=your_cohere_key
+   TOGETHER_API_KEY=your_together_key  
+   REPLICATE_API_TOKEN=your_replicate_token
+   FLASK_ENV=production
+   ZEABUR=true
    ```
 
-#### 4. Automatic Setup
-Glitch will automatically:
-- Install Node.js dependencies from `package.json`
-- Install Python dependencies from `requirements.txt`
-- Build the frontend automatically
-- Start the application via `server.js`
+4. **Deploy**
+   - Zeabur will automatically detect Python and deploy
+   - Your backend will be available at: `https://your-service.zeabur.app`
 
-#### 5. Manual Setup (if needed)
-If automatic setup fails, use the terminal:
-```bash
-# Install dependencies
-npm install
-pip install -r requirements.txt
+### 3. Test Backend
+Visit `https://your-backend.zeabur.app/health` to verify deployment.
 
-# Build frontend
-npm run build
+---
 
-# Start app
-npm start
+## 🌐 Frontend Deployment (Vercel)
+
+### 1. Prepare Frontend
+Navigate to your `frontend/` directory. The files are ready:
+- `package.json` - Dependencies and scripts
+- `next.config.js` - Vercel configuration  
+- `.env.example` - Environment template
+
+### 2. Deploy to Vercel
+
+1. **Create Vercel Account**
+   - Go to [vercel.com](https://vercel.com)
+   - Sign up with GitHub
+
+2. **Import Project**
+   - Click "New Project"
+   - Import from GitHub
+   - Select your repository
+   - **Set Root Directory**: `frontend`
+
+3. **Configure Environment Variables**
+   Add in Vercel dashboard:
+   ```
+   NEXT_PUBLIC_API_URL=https://your-backend.zeabur.app
+   ```
+
+4. **Deploy**
+   - Vercel will automatically build and deploy
+   - Your frontend will be available at: `https://your-app.vercel.app`
+
+---
+
+## 🔗 Connect Frontend & Backend
+
+### 1. Update CORS in Backend
+In your backend `.env` file on Zeabur:
+```
+CORS_ORIGINS=https://your-frontend.vercel.app
 ```
 
-#### 4. Project Structure for Glitch
+### 2. Test Integration
+1. Open your Vercel frontend URL
+2. Try the code analysis features
+3. Verify API calls work correctly
+
+---
+
+## 📋 Quick Deployment Checklist
+
+### Backend (Zeabur)
+- [ ] Repository connected to Zeabur
+- [ ] Environment variables configured
+- [ ] Health endpoint responding
+- [ ] CORS configured for frontend domain
+
+### Frontend (Vercel) 
+- [ ] Repository connected to Vercel
+- [ ] Root directory set to `frontend`
+- [ ] `NEXT_PUBLIC_API_URL` environment variable set
+- [ ] Build successful
+- [ ] API calls working
+
+---
+
+## 🛠️ Environment Variables Reference
+
+### Backend (Zeabur Dashboard)
 ```
-/
-├── server.js              # Main server file (we'll create this)
-├── main.py                # Flask backend
-├── package.json           # Node.js dependencies and scripts
-├── requirements.txt       # Python dependencies
-├── frontend/              # Next.js frontend
-├── public/                # Static files served by Express
-├── start.sh              # Startup script
-└── glitch.json           # Glitch configuration
+COHERE_API_KEY=your_cohere_api_key
+TOGETHER_API_KEY=your_together_ai_key  
+REPLICATE_API_TOKEN=your_replicate_token
+FLASK_ENV=production
+ZEABUR=true
+CORS_ORIGINS=https://your-frontend.vercel.app
 ```
 
-### 💡 How It Works on Glitch
-1. **Express.js Proxy**: Node.js Express serves frontend and proxies API calls to Flask
-2. **Dual Process**: Flask backend + Express frontend server
-3. **Build Process**: Frontend builds during startup
-4. **Single URL**: Everything accessible from one Glitch URL
-
-### 🚀 Architecture
+### Frontend (Vercel Dashboard)
 ```
-https://your-app.glitch.me/
-├── / (React Frontend via Express)
-├── /analysis (Code Analysis Page)
-├── /comparison (Detailed Comparison)
-├── /api/check (Proxied to Flask backend)
-├── /api/analyze (Proxied to Flask backend)
-└── /api/detailed-check (Proxied to Flask backend)
+NEXT_PUBLIC_API_URL=https://your-backend.zeabur.app
 ```
 
-### 🌐 Your Live App
-Once deployed, your app will be available at:
-`https://ai-code-plagiarism-detector.glitch.me`
+---
 
-### 💰 Cost
-- **100% FREE** - No hidden costs
-- **Always-on**: App sleeps after 5 minutes of inactivity
-- **Resource limits**: 1GB storage, 4000 requests/hour
-- **Perfect for**: Demos, portfolios, learning projects
+## 🎯 Benefits of This Setup
 
-### ⚡ Performance on Free Tier
-- **Boot time**: ~10-15 seconds from sleep
-- **Memory**: 512MB RAM (sufficient for your app)
-- **Storage**: 1GB (more than enough)
-- **Bandwidth**: Unlimited for reasonable use
+### Performance
+- **CDN**: Vercel provides global CDN for frontend
+- **Edge Functions**: Optimized API calls  
+- **Python Optimization**: Zeabur optimized for Python apps
 
-### 🎉 Benefits of Glitch
-- **No credit card required**
-- **Instant deployment**
-- **Built-in terminal**
-- **Live code editing**
-- **Community showcase**
-- **Educational friendly**
-- **Great for MVPs and demos**
+### Scalability  
+- **Independent Scaling**: Scale frontend and backend separately
+- **Resource Optimization**: Each service uses optimal resources
+- **Cost Effective**: Pay only for what you use
 
-### 📝 Next Steps
-See the detailed setup files and configuration coming next!
+### Development
+- **Separate Deployments**: Update frontend/backend independently  
+- **Better Organization**: Clear separation of concerns
+- **Team Collaboration**: Frontend and backend teams can work independently
 
-Need help? Glitch has excellent documentation and community support!
+---
+
+## 🔍 Troubleshooting
+
+### Backend Issues
+- **500 Errors**: Check Zeabur logs for Python errors
+- **API Not Responding**: Verify environment variables set
+- **CORS Errors**: Ensure frontend URL added to CORS_ORIGINS
+
+### Frontend Issues  
+- **Build Failures**: Check package.json and dependencies
+- **API Errors**: Verify NEXT_PUBLIC_API_URL is correct
+- **404 on Routes**: Ensure Vercel routing configured
+
+### Integration Issues
+- **CORS Blocked**: Update backend CORS configuration
+- **API Not Found**: Verify backend URL in frontend env vars
+- **Environment Variables**: Check both dashboards for correct values
+
+---
+
+## 🎉 Success!
+
+Once deployed, you'll have:
+- ✅ **Fast Backend**: Python Flask on Zeabur
+- ✅ **Lightning Frontend**: Next.js on Vercel  
+- ✅ **Global CDN**: Optimized worldwide delivery
+- ✅ **Auto-scaling**: Handle traffic spikes automatically
+- ✅ **Professional URLs**: Custom domains supported
+
+**Your AI Code Plagiarism Detector is now live with enterprise-grade infrastructure!**

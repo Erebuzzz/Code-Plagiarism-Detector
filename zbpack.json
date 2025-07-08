@@ -1,0 +1,14 @@
+{
+  "name": "ai-code-plagiarism-detector-backend",
+  "build": {
+    "runtime": "python",
+    "install": "pip install -r requirements.txt",
+    "start": "python main.py"
+  },
+  "services": {
+    "backend": {
+      "port": 5000,
+      "healthcheck": "/health"
+    }
+  }
+}
