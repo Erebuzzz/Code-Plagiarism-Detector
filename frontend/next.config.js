@@ -12,10 +12,18 @@ const nextConfig = {
   async rewrites() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
     
+    // Ensure the URL has proper protocol
+    let formattedApiUrl = apiUrl;
+    if (!apiUrl.startsWith('http://') && !apiUrl.startsWith('https://')) {
+      formattedApiUrl = `https://${apiUrl}`;
+    }
+    
+    console.log('API URL for rewrites:', formattedApiUrl);
+    
     return [
       {
         source: '/api/:path*',
-        destination: `${apiUrl}/:path*`,
+        destination: `${formattedApiUrl}/:path*`,
       },
     ]
   },
