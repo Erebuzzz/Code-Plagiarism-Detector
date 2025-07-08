@@ -1,0 +1,10 @@
+{
+  "name": "ai-code-plagiarism-detector-frontend",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "functions": {
+    "app/api/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
+}
