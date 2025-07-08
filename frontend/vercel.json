@@ -1,3 +1,4 @@
 {
-  "name": "ai-code-plagiarism-detector-frontend"
+  "name": "ai-code-plagiarism-detector-frontend",
+  "framework": "nextjs"
 }
